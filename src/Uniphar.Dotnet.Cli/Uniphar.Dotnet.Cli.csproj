@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>Uniphar.Dotnet.Cli</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>Uniphar</ToolCommandName>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<PackageVersion>1.0.1</PackageVersion>
+		<Authors>Uniphar</Authors>
+		<Title>Uniphar.Dotnet.Cli</Title>
+		<Description>The repository for Uniphar.Dotnet.Cli, a .NET CLI tool designed to obtain tokens from an Entra application. Easily accessible via NuGet, this tool is built to support and simplify your development and testing processes. More features will be added in future updates.</Description>
+		<PackageProjectUrl>https://github.com/Uniphar/dotnet-cli-extension</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Identity.Client" Version="*" />
+		<PackageReference Include="System.CommandLine" Version="*-*" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,49 @@
+name: CD for Uniphar.Dotnet.Cli project
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/uniphar-dotnet-cli-cd.yaml
+      - src/Uniphar.Dotnet.Cli/**
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: read
+
+jobs:
+  Package_CD:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/Uniphar.Dotnet.Cli
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9'
+      
+      - name: Restore dependencies
+        run: dotnet restore --no-cache --force 
+
+      - name: dotnet pack
+        run: dotnet pack --configuration Release -o ./.nupkgs
+  
+      - name: get NuGet repository API key
+        shell: pwsh
+        run: |
+          $nuGetAPIKeySecret = Get-AzKeyVaultSecret -VaultName uni-core-platform-kv -Name nuget-org-repository-api-key
+          $nuGetAPIKey = ConvertFrom-SecureString $nuGetAPIKeySecret.SecretValue -AsPlainText
+
+          echo "NUGET_API_KEY=$nuGetAPIKey" >> $env:GITHUB_ENV
+      
+      - name : dotnet nuget push
+        working-directory: ./src/Uniphar.Dotnet.Cli
+        run: dotnet nuget push ./.nupkgs/*.nupkg --source 'https://api.nuget.org/v3/index.json' --api-key $NUGET_API_KEY
