@@ -1,8 +1,6 @@
 name: CD for Uniphar.Dotnet.Cli project
 
 on:
-  workflow_dispatch:
-
   push:
     branches:
       - main
