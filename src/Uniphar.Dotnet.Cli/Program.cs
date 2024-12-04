@@ -1,8 +1,11 @@
-﻿using System.CommandLine;
+﻿global using Microsoft.Identity.Client;
+
+using System.CommandLine;
 using Uniphar.Dotnet.Cli;
 using Uniphar.Dotnet.Cli.Token;
 
-var rootCommand = new RootCommand()
+
+RootCommand rootCommand = new()
 {
     Description = "A .NET CLI tool to support and simplify your development and testing processes",
     Name = "uniphar"
