@@ -9,7 +9,7 @@
 		<PackAsTool>true</PackAsTool>
 		<ToolCommandName>Uniphar</ToolCommandName>
 		<PackageOutputPath>./nupkg</PackageOutputPath>
-		<PackageVersion>1.0.1</PackageVersion>
+		<PackageVersion>1.0.0</PackageVersion>
 		<Authors>Uniphar</Authors>
 		<Title>Uniphar.Dotnet.Cli</Title>
 		<Description>The repository for Uniphar.Dotnet.Cli, a .NET CLI tool designed to obtain tokens from an Entra application. Easily accessible via NuGet, this tool is built to support and simplify your development and testing processes. More features will be added in future updates.</Description>
@@ -18,7 +18,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Identity.Client" Version="*" />
-		<PackageReference Include="System.CommandLine" Version="*-*" />
+		<PackageReference Include="Spectre.Console.Cli" Version="0.49.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="nupkg\" />
 	</ItemGroup>
 
 </Project>
