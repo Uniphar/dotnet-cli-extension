@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+		<RootNamespace>Uniphar.Dotnet.Cli</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>uniphar</ToolCommandName>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<PackageVersion>1.2.0.1</PackageVersion>
+		<Authors>Uniphar</Authors>
+		<Title>Uniphar.Dotnet.Cli</Title>
+		<Description>An internal tool to streamline some everyday development and testing practices at Uniphar.</Description>
+		<PackageProjectUrl>https://github.com/Uniphar/dotnet-cli-extension</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Identity.Client" Version="4.*" />
+		<PackageReference Include="Spectre.Console.Cli" Version="0.*" />
+
+		<Using Include="Microsoft.Identity.Client" />
+		<Using Include="Spectre.Console" />
+		<Using Include="Spectre.Console.Cli" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="nupkg\" />
+	</ItemGroup>
+
+</Project>
