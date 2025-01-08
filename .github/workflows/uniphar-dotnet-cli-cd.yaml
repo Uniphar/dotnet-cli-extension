@@ -47,12 +47,16 @@ jobs:
         run: dotnet pack --configuration Release -o ./.nupkgs
   
       - name: get NuGet repository API key
-        shell: pwsh
-        run: |
-          $nuGetAPIKeySecret = Get-AzKeyVaultSecret -VaultName uni-core-platform-kv -Name nuget-org-repository-api-key
-          $nuGetAPIKey = ConvertFrom-SecureString $nuGetAPIKeySecret.SecretValue -AsPlainText
-
-          echo "NUGET_API_KEY=$nuGetAPIKey" >> $env:GITHUB_ENV
+        uses: azure/powershell@v2
+        with:
+          inlineScript: |
+            $nuGetAPIKeySecret = Get-AzKeyVaultSecret -VaultName uni-core-platform-kv -Name nuget-org-repository-api-key
+            $nuGetAPIKey = ConvertFrom-SecureString $nuGetAPIKeySecret.SecretValue -AsPlainText
+  
+            echo "NUGET_API_KEY=$nuGetAPIKey" >> $env:GITHUB_ENV 
+          azPSVersion: "latest"
+          errorActionPreference: 'stop'
+          failOnStandardError: true
       
       - name : dotnet nuget push
         working-directory: ./src/Uniphar.Dotnet.Cli

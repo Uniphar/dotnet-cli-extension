@@ -25,7 +25,7 @@ internal sealed class GetTokenCommand : AsyncCommand<GetTokenCommand.Settings>
         
         var scope = string.IsNullOrWhiteSpace(settings.Scope) ? ".default" : settings.Scope;
 
-        var result = await app.AcquireTokenInteractive([$"{settings.TenantId}/{scope}"]).ExecuteAsync();
+        var result = await app.AcquireTokenInteractive([$"{settings.ClientId}/{scope}"]).ExecuteAsync();
         
         AnsiConsole.MarkupLine($"{Environment.NewLine}[purple]{result.AccessToken}[/]");
 
