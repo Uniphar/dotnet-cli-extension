@@ -43,7 +43,7 @@ jobs:
       - name: Update Version in .csproj
         shell: pwsh
         run: |
-          $csprojPath = "src/Uniphar.Dotnet.Cli/Uniphar.Dotnet.Cli.csproj"
+          $csprojPath = "Uniphar.Dotnet.Cli.csproj"
           $runNumber = "${{github.run_number}}.${{github.run_attempt}}"
           $content = Get-Content $csprojPath -Raw
           
