@@ -39,12 +39,30 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9'
+
+      - name: Update Version in .csproj
+        shell: pwsh
+        run: |
+          $csprojPath = "src/Uniphar.Dotnet.Cli/Uniphar.Dotnet.Cli.csproj"
+          $runNumber = "${{github.run_number}}.${{github.run_attempt}}"
+          $content = Get-Content $csprojPath -Raw
+          
+          # Match and extract current version
+          if ($content -match '<Version>(.*?)<\/Version>') {
+              $currentVersion = $Matches[1]
+              $newVersion = "$currentVersion.$runNumber"
+              $content = $content -replace '<Version>(.*?)<\/Version>', "<Version>$newVersion</Version>"
+              Set-Content $csprojPath $content
+              Write-Output "Updated version to $newVersion in $csprojPath"
+          } else {
+              Write-Error "Could not find a <Version> tag in $csprojPath"
+          }
       
       - name: Restore dependencies
         run: dotnet restore --no-cache --force 
 
       - name: dotnet pack
-        run: dotnet pack --configuration Release -o ./.nupkgs
+        run: dotnet pack --configuration Release --output ./.nupkgs
   
       - name: get NuGet repository API key
         uses: azure/powershell@v2
