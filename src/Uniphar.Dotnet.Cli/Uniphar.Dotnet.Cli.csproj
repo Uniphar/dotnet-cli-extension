@@ -9,7 +9,7 @@
 		<PackAsTool>true</PackAsTool>
 		<ToolCommandName>uniphar</ToolCommandName>
 		<PackageOutputPath>./nupkg</PackageOutputPath>
-		<PackageVersion>1.2.0.1</PackageVersion>
+		<VersionPrefix >1.2.1</VersionPrefix >
 		<Authors>Uniphar</Authors>
 		<Title>Uniphar.Dotnet.Cli</Title>
 		<Description>An internal tool to streamline some everyday development and testing practices at Uniphar.</Description>

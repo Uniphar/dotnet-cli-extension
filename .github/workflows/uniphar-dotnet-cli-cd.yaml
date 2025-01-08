@@ -44,7 +44,7 @@ jobs:
         run: dotnet restore --no-cache --force 
 
       - name: dotnet pack
-        run: dotnet pack --configuration Release -o ./.nupkgs
+        run: dotnet pack --configuration Release --version-suffix ${{github.run_number}}.${{github.run_attempt}} --output ./.nupkgs
   
       - name: get NuGet repository API key
         uses: azure/powershell@v2
