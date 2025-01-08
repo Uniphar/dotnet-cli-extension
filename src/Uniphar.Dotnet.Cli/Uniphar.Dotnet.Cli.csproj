@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -9,7 +9,7 @@
 		<PackAsTool>true</PackAsTool>
 		<ToolCommandName>uniphar</ToolCommandName>
 		<PackageOutputPath>./nupkg</PackageOutputPath>
-		<VersionPrefix >1.2.1</VersionPrefix >
+		<Version>1.2</Version>
 		<Authors>Uniphar</Authors>
 		<Title>Uniphar.Dotnet.Cli</Title>
 		<Description>An internal tool to streamline some everyday development and testing practices at Uniphar.</Description>
