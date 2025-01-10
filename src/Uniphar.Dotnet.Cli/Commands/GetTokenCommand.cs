@@ -22,13 +22,13 @@ internal sealed class GetTokenCommand : AsyncCommand<GetTokenCommand.Settings>
 
     public async override Task<int> ExecuteAsync(CommandContext context, Settings settings)
     {
-        var authorityUri = (settings.UseCIAM ?? false) ? "https://{0}.ciamlogin.com" : "https://login.microsoftonline.com/{0}";
         var tenantId = settings.TenantId.ToString();
         var clientId = settings.ClientId.ToString();
+        var authorityUri = (settings.UseCIAM ?? false) ? $"https://{tenantId}.ciamlogin.com" : $"https://login.microsoftonline.com/{tenantId}";
 
         var app = PublicClientApplicationBuilder.Create(clientId)
                                                 .WithTenantId(tenantId)
-                                                .WithAuthority(string.Format(authorityUri, tenantId))
+                                                .WithAuthority(authorityUri)
                                                 .WithDefaultRedirectUri()
                                                 .Build();
         
