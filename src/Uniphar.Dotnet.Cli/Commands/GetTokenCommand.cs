@@ -42,7 +42,11 @@ internal sealed class GetTokenCommand : AsyncCommand<GetTokenCommand.Settings>
 
         var result = await app.AcquireTokenInteractive([scope]).ExecuteAsync();
 
-        AnsiConsole.MarkupLine($"{Environment.NewLine}[purple]{result.AccessToken}[/]");
+        //Access token is long and MarkupLine breaks the output in multiple lines with new line character
+        var color = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.WriteLine($"{result.AccessToken}");
+        Console.ForegroundColor = color;
 
         return 0;
     }
