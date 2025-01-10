@@ -11,7 +11,7 @@ internal sealed class GetTokenCommand : AsyncCommand<GetTokenCommand.Settings>
         public required Guid ClientId { get; set; }
 
         [CommandOption("-s|--scope")]
-        [DefaultValue(".default")]
+        [DefaultValue(null)]
         public string? Scope { get; set; }
 
         [CommandOption("--useCIAM")]
@@ -32,7 +32,7 @@ internal sealed class GetTokenCommand : AsyncCommand<GetTokenCommand.Settings>
                                                 .WithDefaultRedirectUri()
                                                 .Build();
         
-        var scope = string.IsNullOrWhiteSpace(settings.Scope) ? ".default" : settings.Scope;
+        var scope = string.IsNullOrWhiteSpace(settings.Scope) ? $"{clientId}/.default" : settings.Scope;
 
         AnsiConsole.MarkupLine($"[bold][steelblue1]- TenantId    : [/][/][italic]{tenantId}[/]");
         AnsiConsole.MarkupLine($"[bold][steelblue1]- ClientId    : [/][/][italic]{clientId}[/]");
@@ -40,7 +40,7 @@ internal sealed class GetTokenCommand : AsyncCommand<GetTokenCommand.Settings>
         AnsiConsole.MarkupLine($"[bold][steelblue1]- Scope       : [/][/][italic]{scope}[/]");
 
 
-        var result = await app.AcquireTokenInteractive([$"{clientId}/{scope}"]).ExecuteAsync();
+        var result = await app.AcquireTokenInteractive([scope]).ExecuteAsync();
 
         AnsiConsole.MarkupLine($"{Environment.NewLine}[purple]{result.AccessToken}[/]");
 
