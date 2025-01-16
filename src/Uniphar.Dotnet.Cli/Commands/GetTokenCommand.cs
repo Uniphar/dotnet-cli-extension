@@ -27,16 +27,16 @@ internal sealed class GetTokenCommand : AsyncCommand<GetTokenCommand.Settings>
         var clientId = settings.ClientId.ToString();
         var authority = settings.Authority ?? "ms";
 
-        var authorityUri = authority.ToLower() switch
+        var (authorityUri, isPredefinedAuthority) = authority.ToLower() switch
         {
-            "ms" => $"https://login.microsoftonline.com/{tenantId}",
-            "ciam" => $"https://{tenantId}.ciamlogin.com",
-            _ when Uri.TryCreate(authority, UriKind.Absolute, out _) => ((Func<string>)(() => {
-                AnsiConsole.MarkupLine("[bold yellow]Warning:[/] Using an arbitrary URI for authority is temporary. Please submit a PR to add your authority (currently supported: ms, ciam).");
-                return authority;
-            }))(),
+            "ms" => ($"https://login.microsoftonline.com/{tenantId}", true),
+            "ciam" => ($"https://{tenantId}.ciamlogin.com", true),
+            _ when Uri.TryCreate(authority, UriKind.Absolute, out _) => (authority, false),
             _ => throw new Exception("Invalid authority URI")
         };
+
+        if (!isPredefinedAuthority)
+            AnsiConsole.MarkupLine("[bold yellow]Warning:[/] Using an arbitrary URI for authority is temporary. Please submit a PR to add your authority (currently supported: ms, ciam).");
 
         var app = PublicClientApplicationBuilder.Create(clientId)
                                                 .WithTenantId(tenantId)
@@ -54,8 +54,8 @@ internal sealed class GetTokenCommand : AsyncCommand<GetTokenCommand.Settings>
 
         var result = await app.AcquireTokenInteractive([scope]).ExecuteAsync();
 
-        using (AnsiConsoleEx.SetColors(foreground: Color.DarkGreen))
-            AnsiConsoleEx.WritePlainLine(result.AccessToken);
+        using (ConsoleEx.SetColors(foreground: ConsoleColor.DarkGreen))
+            Console.WriteLine(result.AccessToken); // We are using Console because AnsiConsole is adding line breaks to the output
 
         return 0;
     }
