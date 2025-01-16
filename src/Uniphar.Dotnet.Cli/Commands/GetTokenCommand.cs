@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.Design;
 
 internal sealed class GetTokenCommand : AsyncCommand<GetTokenCommand.Settings>
 {
